@@ -4,7 +4,7 @@ Offline Android self-study companion for 10th-grade SSLC students in rural areas
 
 ## Stack
 
-- Java, XML layouts, ViewBinding
+-kotlin, XML layouts, ViewBinding
 - Android SDK 34, min SDK 24, target SDK 34
 - Gradle 8.2 / Android Gradle Plugin 8.2.2 / JDK 17
 - Room SQLite, RecyclerView, Material Components
