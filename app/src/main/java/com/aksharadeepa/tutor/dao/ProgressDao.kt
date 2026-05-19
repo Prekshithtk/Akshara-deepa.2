@@ -1,21 +1,20 @@
-package com.aksharadeepa.tutor.dao;
+package com.aksharadeepa.tutor.dao
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-
-import com.aksharadeepa.tutor.models.Progress;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.aksharadeepa.tutor.models.Progress
 
 @Dao
-public interface ProgressDao {
+interface ProgressDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void upsert(Progress progress);
+    suspend fun upsert(progress: Progress)
 
     @Query("SELECT COUNT(*) FROM progress WHERE completed = 1")
-    LiveData<Integer> completedCountLive();
+    fun completedCountLive(): LiveData<Int>
 
     @Query("SELECT COUNT(*) FROM progress WHERE completed = 1 AND completedAt >= :start AND completedAt < :end")
-    LiveData<Integer> completedBetweenLive(long start, long end);
+    fun completedBetweenLive(start: Long, end: Long): LiveData<Int>
 }

@@ -1,19 +1,18 @@
-package com.aksharadeepa.tutor.dao;
+package com.aksharadeepa.tutor.dao
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.aksharadeepa.tutor.models.User;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.aksharadeepa.tutor.models.User
 
 @Dao
-public interface UserDao {
+interface UserDao {
     @Insert
-    long insert(User user);
+    suspend fun insert(user: User): Long
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
-    User findByUsername(String username);
+    suspend fun findByUsername(username: String): User?
 
     @Query("SELECT COUNT(*) FROM users")
-    int count();
+    suspend fun count(): Int
 }

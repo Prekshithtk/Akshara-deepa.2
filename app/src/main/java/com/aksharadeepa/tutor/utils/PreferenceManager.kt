@@ -1,62 +1,44 @@
-package com.aksharadeepa.tutor.utils;
+package com.aksharadeepa.tutor.utils
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import android.content.SharedPreferences
 
-public class PreferenceManager {
-    private static final String PREFS = "akshara_prefs";
-    private final SharedPreferences prefs;
+class PreferenceManager(context: Context) {
+    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
-    public PreferenceManager(Context context) {
-        prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+    var isLoggedIn: Boolean
+        get() = prefs.getBoolean("logged_in", false)
+        set(value) = prefs.edit().putBoolean("logged_in", value).apply()
+
+    var username: String?
+        get() = prefs.getString("username", "Student")
+        set(value) = prefs.edit().putString("username", value).apply()
+
+    var isDarkMode: Boolean
+        get() = prefs.getBoolean("dark_mode", false)
+        set(value) = prefs.edit().putBoolean("dark_mode", value).apply()
+
+    var isReminderEnabled: Boolean
+        get() = prefs.getBoolean("reminder", false)
+        set(value) = prefs.edit().putBoolean("reminder", value).apply()
+
+    val streak: Int
+        get() = prefs.getInt("streak", 0)
+
+    val lastGoalDay: Long
+        get() = prefs.getLong("last_goal_day", 0L)
+
+    fun updateStreakIfNeeded(dayKey: Long) {
+        val last = lastGoalDay
+        if (last == dayKey) return
+        val newStreak = if (last == dayKey - 1) streak + 1 else 1
+        prefs.edit()
+            .putLong("last_goal_day", dayKey)
+            .putInt("streak", newStreak)
+            .apply()
     }
 
-    public boolean isLoggedIn() {
-        return prefs.getBoolean("logged_in", false);
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        prefs.edit().putBoolean("logged_in", loggedIn).apply();
-    }
-
-    public String getUsername() {
-        return prefs.getString("username", "Student");
-    }
-
-    public void setUsername(String username) {
-        prefs.edit().putString("username", username).apply();
-    }
-
-    public boolean isDarkMode() {
-        return prefs.getBoolean("dark_mode", false);
-    }
-
-    public void setDarkMode(boolean enabled) {
-        prefs.edit().putBoolean("dark_mode", enabled).apply();
-    }
-
-    public boolean isReminderEnabled() {
-        return prefs.getBoolean("reminder", false);
-    }
-
-    public void setReminderEnabled(boolean enabled) {
-        prefs.edit().putBoolean("reminder", enabled).apply();
-    }
-
-    public int getStreak() {
-        return prefs.getInt("streak", 0);
-    }
-
-    public long getLastGoalDay() {
-        return prefs.getLong("last_goal_day", 0L);
-    }
-
-    public void updateStreakIfNeeded(long dayKey) {
-        long last = getLastGoalDay();
-        if (last == dayKey) {
-            return;
-        }
-        int streak = last == dayKey - 1 ? getStreak() + 1 : 1;
-        prefs.edit().putLong("last_goal_day", dayKey).putInt("streak", streak).apply();
+    companion object {
+        private const val PREFS = "akshara_prefs"
     }
 }

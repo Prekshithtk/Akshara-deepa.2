@@ -1,12 +1,14 @@
-package com.aksharadeepa.tutor.models;
+package com.aksharadeepa.tutor.models
 
-public class SubjectProgress {
-    public int subjectId;
-    public String subjectName;
-    public int totalChapters;
-    public int completedChapters;
+import kotlin.math.roundToInt
 
-    public int percent() {
-        return totalChapters == 0 ? 0 : Math.round((completedChapters * 100f) / totalChapters);
+data class SubjectProgress(
+    val subjectId: Int,
+    val subjectName: String,
+    val totalChapters: Int,
+    val completedChapters: Int
+) {
+    fun percent(): Int {
+        return if (totalChapters == 0) 0 else (completedChapters * 100f / totalChapters).roundToInt()
     }
 }

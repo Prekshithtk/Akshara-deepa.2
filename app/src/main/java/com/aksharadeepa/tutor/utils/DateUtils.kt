@@ -1,20 +1,18 @@
-package com.aksharadeepa.tutor.utils;
+package com.aksharadeepa.tutor.utils
 
-import java.util.Calendar;
+import java.util.Calendar
 
-public final class DateUtils {
-    private DateUtils() {}
-
-    public static long startOfToday() {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        return c.getTimeInMillis();
+object DateUtils {
+    fun startOfToday(): Long {
+        return Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
     }
 
-    public static long dayKey() {
-        return startOfToday() / 86_400_000L;
+    fun dayKey(): Long {
+        return startOfToday() / 86_400_000L
     }
 }

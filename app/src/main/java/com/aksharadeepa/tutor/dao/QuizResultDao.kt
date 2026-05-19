@@ -1,16 +1,15 @@
-package com.aksharadeepa.tutor.dao;
+package com.aksharadeepa.tutor.dao
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.aksharadeepa.tutor.models.QuizResult;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.aksharadeepa.tutor.models.QuizResult
 
 @Dao
-public interface QuizResultDao {
+interface QuizResultDao {
     @Insert
-    void insert(QuizResult result);
+    suspend fun insert(result: QuizResult)
 
     @Query("SELECT COUNT(*) FROM quiz_results")
-    int count();
+    suspend fun count(): Int
 }

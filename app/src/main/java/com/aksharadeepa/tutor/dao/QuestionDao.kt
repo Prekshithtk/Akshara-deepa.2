@@ -1,22 +1,19 @@
-package com.aksharadeepa.tutor.dao;
+package com.aksharadeepa.tutor.dao
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-
-import com.aksharadeepa.tutor.models.QuizQuestion;
-
-import java.util.List;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.aksharadeepa.tutor.models.QuizQuestion
 
 @Dao
-public interface QuestionDao {
+interface QuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<QuizQuestion> questions);
+    suspend fun insertAll(questions: List<QuizQuestion>)
 
     @Query("SELECT * FROM quiz_questions WHERE chapterId = :chapterId ORDER BY id LIMIT 5")
-    List<QuizQuestion> getForChapter(int chapterId);
+    suspend fun getForChapter(chapterId: Int): List<QuizQuestion>
 
     @Query("SELECT COUNT(*) FROM quiz_questions")
-    int count();
+    suspend fun count(): Int
 }
